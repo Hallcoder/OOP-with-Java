@@ -18,5 +18,10 @@ file:
     dir : upload
 logging:
   level:
-    org.springframework.security: TRACE
+    org.springframework.security: DEBUG
     rw.ac.rca.OnlineShop: TRACE
+springdoc:
+  swagger-ui:
+    enabled: true
+    path: /swagger-ui.html
+  api-docs.path: /api-docs

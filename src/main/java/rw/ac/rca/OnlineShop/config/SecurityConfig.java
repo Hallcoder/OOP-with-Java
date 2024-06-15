@@ -24,7 +24,20 @@ import rw.ac.rca.OnlineShop.security.UserDetailsServiceImpl;
 public class SecurityConfig {
 private JwtAuthenticationFilter jwtAuthenticationFilter;
 private UserDetailsServiceImpl userDetailsService;
-private static final String[] SWAGGER_UI_WHITELIST = {"/swagger-ui/**","/v3/api-docs/","/api/v1/product/**","/api/v1/auth/**","/api/v1/user/**","/swagger-resources/**","/swagger-resources"};
+private static final String[] WHITELIST = {
+        "/swagger-ui/**",
+        "/swagger-ui.html",
+        "/v3/api-docs/**",
+        "/swagger.json",
+        "/api/v1/product/**",
+        "/api/v1/auth/**",
+        "/api/v1/user/**",
+        "/swagger-resources",
+        "/swagger-resources/**",
+        "/configuration/ui",
+        "/configuration/security",
+        "/webjars/**",
+        "/actuator/*"};
 
 @Bean
 public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception{
@@ -32,8 +45,8 @@ public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Excepti
             .csrf(AbstractHttpConfigurer::disable)
             .authorizeHttpRequests(authorizeRequests ->
                     authorizeRequests
-                            .requestMatchers(SWAGGER_UI_WHITELIST).permitAll()
-                            .anyRequest().authenticated()
+                            .requestMatchers(WHITELIST).permitAll()
+                            .anyRequest().permitAll()
             )
             .sessionManagement(manager -> manager.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
             .authenticationProvider(authenticationProvider())
