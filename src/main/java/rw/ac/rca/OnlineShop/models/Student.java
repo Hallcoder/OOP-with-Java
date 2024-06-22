@@ -5,6 +5,7 @@ import lombok.Data;
 
 import javax.annotation.processing.Generated;
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 @Entity
@@ -18,5 +19,5 @@ public class Student{
     private String grade;
     @ManyToMany
     @JoinTable(joinColumns = @JoinColumn(name="student_id"), inverseJoinColumns = @JoinColumn(name = "course_id"))
-    private List<Course> courses;
+    private Set<Course> courses;
 }

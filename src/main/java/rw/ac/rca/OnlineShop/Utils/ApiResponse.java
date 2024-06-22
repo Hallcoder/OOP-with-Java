@@ -11,4 +11,8 @@ public class ApiResponse<T> {
     private HttpStatus status;
     private T data;
 
+    public ApiResponse(String message){
+        this.message = message;
+    }
+
 }

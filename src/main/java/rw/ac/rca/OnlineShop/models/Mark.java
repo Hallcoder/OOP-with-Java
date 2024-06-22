@@ -14,7 +14,6 @@ public class Mark {
     @ManyToOne
     private Student student;
     private Double score;
-
     @ManyToOne
     private Course course;
 }

@@ -6,6 +6,8 @@ import rw.ac.rca.OnlineShop.models.Student;
 import rw.ac.rca.OnlineShop.repositories.IStudentRepository;
 import rw.ac.rca.OnlineShop.services.IStudentService;
 
+import java.util.List;
+
 @Service
 @AllArgsConstructor
 public class StudentService implements IStudentService {
@@ -13,5 +15,10 @@ public class StudentService implements IStudentService {
     @Override
     public Student create(Student student) {
         return studentRepository.save(student);
+    }
+
+    @Override
+    public List<Student> getStudents() {
+        return studentRepository.findAll();
     }
 }

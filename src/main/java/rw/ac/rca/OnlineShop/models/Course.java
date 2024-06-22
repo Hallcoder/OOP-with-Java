@@ -15,4 +15,5 @@ public class Course {
 
     private String courseName;
     private Double weight;
+    private String courseCode;
 }
