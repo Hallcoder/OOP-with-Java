@@ -32,6 +32,7 @@ private static final String[] WHITELIST = {
         "/api/v1/product/**",
         "/api/v1/auth/**",
         "/api/v1/user/**",
+        "/api/v1/customer/**",
         "/swagger-resources",
         "/swagger-resources/**",
         "/configuration/ui",
@@ -46,7 +47,7 @@ public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Excepti
             .authorizeHttpRequests(authorizeRequests ->
                     authorizeRequests
                             .requestMatchers(WHITELIST).permitAll()
-                            .anyRequest().permitAll()
+                            .anyRequest().authenticated()
             )
             .sessionManagement(manager -> manager.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
             .authenticationProvider(authenticationProvider())

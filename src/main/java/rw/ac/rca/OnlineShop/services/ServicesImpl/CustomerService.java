@@ -1,7 +1,9 @@
 package rw.ac.rca.OnlineShop.services.ServicesImpl;
 
+import jakarta.validation.constraints.Email;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+import rw.ac.rca.OnlineShop.mailHandling.EmailHandlerService;
 import rw.ac.rca.OnlineShop.models.Customer;
 import rw.ac.rca.OnlineShop.repositories.ICustomerRepository;
 import rw.ac.rca.OnlineShop.services.ICustomerService;

@@ -7,6 +7,7 @@ import rw.ac.rca.OnlineShop.repositories.IUserRepository;
 import rw.ac.rca.OnlineShop.services.IUserService;
 
 import java.util.NoSuchElementException;
+import java.util.Optional;
 
 @Service
 @AllArgsConstructor
@@ -21,5 +22,10 @@ public class UserServiceImpl implements IUserService {
     public User getUserById(int id) {
         User user = userRepository.findById(id).orElseThrow(() -> new NoSuchElementException("User not found!"));
         return user;
+    }
+
+    @Override
+    public Optional<User> getUserByEmail(String email) {
+        return userRepository.findByEmail(email);
     }
 }
