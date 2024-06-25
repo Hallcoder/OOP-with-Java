@@ -1,14 +1,12 @@
 package rw.ac.rca.OnlineShop.controllers;
 
+import io.swagger.annotations.Api;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import rw.ac.rca.OnlineShop.DTOs.CreateCustomerDTO;
 import rw.ac.rca.OnlineShop.DTOs.SaveOrWithdrawMoneyDTO;
 import rw.ac.rca.OnlineShop.Enumerations.ERole;
@@ -26,6 +24,7 @@ import rw.ac.rca.OnlineShop.services.IUserService;
 
 import java.time.LocalDate;
 import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
@@ -40,16 +39,22 @@ public class CustomerController {
     private final PasswordEncoder passwordEncoder;
     private final IAccountRepository accountRepository;
     private final IBankingService bankingService;
+
+    @GetMapping
+    public ResponseEntity<?> getCustomers(){
+        List<Customer> customers = customerService.getCustomers();
+        return ResponseEntity.ok(new ApiResponse<List<Customer>>("Customers here", HttpStatus.OK,customers));
+    }
     @PostMapping("/register")
     public ResponseEntity<?> registerCustomer(@RequestBody CreateCustomerDTO dto){
         Customer newCustomer = new Customer();
         modelMapper.map(dto,newCustomer);
         newCustomer.setLastUpdateTime(LocalDate.now());
         newCustomer.setBalance(0.0);
-//        Optional<User> existingUser = userService.getUserByEmail(dto.getEmail());
-//        if(existingUser.isPresent()){
-//            throw new UserAlreadyExists("Email already in use");
-//        }
+        Optional<User> existingUser = userService.getUserByEmail(dto.getEmail());
+        if(existingUser.isPresent()){
+            throw new UserAlreadyExists("Email already in use");
+        }
         User user = new User(dto.getEmail(),passwordEncoder.encode(dto.getPassword()));
         user.setRoles(Collections.singleton(ERole.CUSTOMER));
         user = userService.createUser(user);

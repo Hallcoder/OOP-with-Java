@@ -17,7 +17,7 @@ import rw.ac.rca.OnlineShop.services.IUserService;
 
 import java.util.Collections;
 
-@RestController
+
 @AllArgsConstructor
 @RequestMapping("/api/v1/user")
 public class UserController {

@@ -20,7 +20,7 @@ import rw.ac.rca.OnlineShop.services.IStudentService;
 
 import java.util.NoSuchElementException;
 
-@RestController
+
 @AllArgsConstructor
 @RequestMapping("/api/v1/marks")
 public class MarkController {

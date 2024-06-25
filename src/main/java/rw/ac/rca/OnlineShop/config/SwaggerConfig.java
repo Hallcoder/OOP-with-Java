@@ -23,7 +23,7 @@ public class SwaggerConfig {
     @Bean
     OpenAPI customOpenAPI(){
         return new OpenAPI()
-                .info(new Info().title("Everything Swagger").version("1.0.0"))
+                .info(new Info().title("BANK MANAGEMENT SYSTEM").version("1.0.0"))
                 .addSecurityItem(new SecurityRequirement().addList("bearerAuth"))
                 .components(
                         new Components()

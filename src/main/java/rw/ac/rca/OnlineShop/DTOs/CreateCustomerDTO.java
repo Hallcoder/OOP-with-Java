@@ -14,7 +14,7 @@ public class CreateCustomerDTO {
   private String lastName;
   @Email
   private String email;
-  private String mobile;
+  private String phoneNumber;
   @JsonFormat(pattern = "dd/MM/yyyy")
   private LocalDate dob;
   private String password;

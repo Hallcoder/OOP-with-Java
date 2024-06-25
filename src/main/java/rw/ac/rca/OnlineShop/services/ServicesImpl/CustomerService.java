@@ -8,6 +8,8 @@ import rw.ac.rca.OnlineShop.models.Customer;
 import rw.ac.rca.OnlineShop.repositories.ICustomerRepository;
 import rw.ac.rca.OnlineShop.services.ICustomerService;
 
+import java.util.List;
+
 @AllArgsConstructor
 @Service
 public class CustomerService implements ICustomerService {
@@ -15,5 +17,10 @@ public class CustomerService implements ICustomerService {
     @Override
     public Customer createCustomer(Customer customer) {
         return customerRepository.save(customer);
+    }
+
+    @Override
+    public List<Customer> getCustomers() {
+        return customerRepository.findAll();
     }
 }

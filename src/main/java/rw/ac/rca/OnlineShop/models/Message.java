@@ -1,6 +1,7 @@
 package rw.ac.rca.OnlineShop.models;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -16,7 +17,8 @@ public class Message {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID message_id;
-    @OneToOne
+    @ManyToOne
+    @NotNull
     private Customer customer;
     private String message;
     private LocalDateTime dateTime;

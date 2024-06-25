@@ -15,6 +15,7 @@ import rw.ac.rca.OnlineShop.repositories.IAccountRepository;
 import rw.ac.rca.OnlineShop.repositories.IBankingRepository;
 import rw.ac.rca.OnlineShop.repositories.ICustomerRepository;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
@@ -40,6 +41,7 @@ public class BankingService implements IBankingService{
             }
             customer.setBalance(customer.getBalance() - saveOrWithdrawMoneyDTO.getAmount());
         }
+        customer.setLastUpdateTime(LocalDate.now());
         customerRepository.save(customer);
         BankingRecord bankingRecord = new BankingRecord();
         bankingRecord.setBankingDateTime(LocalDateTime.now());
@@ -48,6 +50,7 @@ public class BankingService implements IBankingService{
         bankingRecord.setCustomer(customer);
         Account account = accountRepository.findById(saveOrWithdrawMoneyDTO.getAccount_id()).orElseThrow(() -> new BadRequestException("Account doesn't exist"));
         bankingRecord.setAccount(account);
+        bankingRecord.setBankingDateTime(LocalDateTime.now());
         eventPublisher.publishEvent(new TransactionCompleteEvent(customer,bankingRecord));
         return bankingRepository.save(bankingRecord);
     }

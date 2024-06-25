@@ -2,6 +2,7 @@ package rw.ac.rca.OnlineShop.models;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -15,13 +16,21 @@ import java.util.UUID;
 @Data
 @Entity
 public class Customer{
+    @Column(nullable = false)
     private String firstName;
+    @Column(nullable = false)
     private String lastName;
+    @Column(nullable = false)
     private String email;
+    @NotNull
+    @Column(nullable = false)
     private String phoneNumber;
+    @Column(nullable = false)
     @JsonFormat(pattern = "dd/MM/yyyy")
     private LocalDate dob;
+    @Column(nullable = false)
     private double balance;
+    @Column(nullable = false)
     @JsonFormat(pattern = "dd/MM/yyyy")
     private LocalDate lastUpdateTime;
     @OneToMany
