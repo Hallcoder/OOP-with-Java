@@ -25,6 +25,7 @@ public class BankingRecord {
     private double amount;
     @ManyToOne
     private Account account;
+    private String message;
     private EBankingRecordType type;
     @JsonFormat(pattern = "dd/MM/yyyy HH:mm:ss")
     private LocalDateTime bankingDateTime;

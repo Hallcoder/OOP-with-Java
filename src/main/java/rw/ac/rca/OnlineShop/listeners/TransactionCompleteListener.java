@@ -24,9 +24,9 @@ public class TransactionCompleteListener implements ApplicationListener<Transact
         String sentMessage = "Dear " + customer.getFirstName() + " " + customer.getLastName() + " Your " + bankingRecord.getType().toString() + " of " + bankingRecord.getAmount() + " RWF on your " + bankingRecord.getAccount().getNumber() + " has been successfully completed!";
         emailHandlerService.sendMessage(customer.getEmail(), "Transaction Approved!",sentMessage);
         Message message = new Message();
-        message.setCustomer(customer);
+        message.setCustomer_id(customer.getCustomer_id());
         message.setMessage(sentMessage);
-        message.setDateTime(LocalDateTime.now());
+        message.setDatetime(LocalDateTime.now());
         messageRepository.save(message);
     }
 }

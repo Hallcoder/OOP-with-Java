@@ -51,6 +51,8 @@ public class BankingService implements IBankingService{
         Account account = accountRepository.findById(saveOrWithdrawMoneyDTO.getAccount_id()).orElseThrow(() -> new BadRequestException("Account doesn't exist"));
         bankingRecord.setAccount(account);
         bankingRecord.setBankingDateTime(LocalDateTime.now());
+        String sentMessage = "Dear " + customer.getFirstName() + " " + customer.getLastName() + " Your " + bankingRecord.getType().toString() + " of " + bankingRecord.getAmount() + " RWF on your " + bankingRecord.getAccount().getNumber() + " has been successfully completed!";
+        bankingRecord.setMessage(sentMessage);
         eventPublisher.publishEvent(new TransactionCompleteEvent(customer,bankingRecord));
         return bankingRepository.save(bankingRecord);
     }

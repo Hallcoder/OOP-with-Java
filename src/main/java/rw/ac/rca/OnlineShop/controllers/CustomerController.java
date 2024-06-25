@@ -2,6 +2,7 @@ package rw.ac.rca.OnlineShop.controllers;
 
 import io.swagger.annotations.Api;
 import lombok.AllArgsConstructor;
+import org.apache.coyote.BadRequestException;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -9,6 +10,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import rw.ac.rca.OnlineShop.DTOs.CreateCustomerDTO;
 import rw.ac.rca.OnlineShop.DTOs.SaveOrWithdrawMoneyDTO;
+import rw.ac.rca.OnlineShop.DTOs.TransferMoneyDTO;
 import rw.ac.rca.OnlineShop.Enumerations.ERole;
 import rw.ac.rca.OnlineShop.Utils.ApiResponse;
 import rw.ac.rca.OnlineShop.exceptions.UserAlreadyExists;
@@ -17,6 +19,7 @@ import rw.ac.rca.OnlineShop.models.BankingRecord;
 import rw.ac.rca.OnlineShop.models.Customer;
 import rw.ac.rca.OnlineShop.models.User;
 import rw.ac.rca.OnlineShop.repositories.IAccountRepository;
+import rw.ac.rca.OnlineShop.repositories.ICustomerRepository;
 import rw.ac.rca.OnlineShop.repositories.IUserRepository;
 import rw.ac.rca.OnlineShop.services.IBankingService;
 import rw.ac.rca.OnlineShop.services.ICustomerService;
@@ -39,6 +42,7 @@ public class CustomerController {
     private final PasswordEncoder passwordEncoder;
     private final IAccountRepository accountRepository;
     private final IBankingService bankingService;
+    private final ICustomerRepository customerRepository;
 
     @GetMapping
     public ResponseEntity<?> getCustomers(){
@@ -68,7 +72,19 @@ public class CustomerController {
         newCustomer = customerService.createCustomer(newCustomer);
         return ResponseEntity.ok(new ApiResponse<Customer>("Customer created succesfully", HttpStatus.CREATED,newCustomer));
     }
-
+    @PostMapping("/transfer")
+    public ResponseEntity<?> transferMoney(@RequestBody TransferMoneyDTO transferMoneyDTO) throws BadRequestException {
+        Optional<Customer> receiver = customerRepository.findById(transferMoneyDTO.getReceiver_id());
+        Optional<Customer> sender = customerRepository.findById(transferMoneyDTO.getSender_id());
+        if(sender.get().getBalance() < transferMoneyDTO.getAmount()){
+            throw new BadRequestException("Balance not enough");
+        }
+        receiver.get().setBalance(receiver.get().getBalance() + transferMoneyDTO.getAmount());
+        sender.get().setBalance(sender.get().getBalance() - transferMoneyDTO.getAmount());
+        customerRepository.save(receiver.get());
+        customerRepository.save(sender.get());
+        return ResponseEntity.ok(new ApiResponse<>("Transfer Complete!",HttpStatus.OK,null));
+    }
     @PostMapping("/transaction")
     public ResponseEntity<?> saveMoney(@RequestBody SaveOrWithdrawMoneyDTO dto) throws Exception {
         BankingRecord record = bankingService.newRecord(dto);
