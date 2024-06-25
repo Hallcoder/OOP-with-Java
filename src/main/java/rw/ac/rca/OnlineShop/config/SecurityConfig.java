@@ -25,21 +25,13 @@ public class SecurityConfig {
 private JwtAuthenticationFilter jwtAuthenticationFilter;
 private UserDetailsServiceImpl userDetailsService;
 private static final String[] WHITELIST = {
-        "/swagger-ui/index.html",
-        "/swagger-ui/**",
-        "/swagger-ui.html",
-        "/v3/api-docs/**",
-        "/swagger.json",
-        "/api/v1/product/**",
-        "/api/v1/auth/**",
-        "/api/v1/user/**",
-        "/api/v1/customer/register",
-        "/swagger-resources",
+        "/v2/API-docs",
+        "/v3/API-docs",
+        "/api-docs/**",
         "/swagger-resources/**",
-        "/configuration/ui",
-        "/configuration/security",
-        "/webjars/**",
-        "/actuator/*"};
+        "/swagger-ui/**",
+        "/api/v1/auth/**",
+        "/api/v1/customer/register"};
 
 @Bean
 public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception{
@@ -48,7 +40,7 @@ public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Excepti
             .authorizeHttpRequests(authorizeRequests ->
                     authorizeRequests
                             .requestMatchers(WHITELIST).permitAll()
-                            .anyRequest().permitAll()
+                            .anyRequest().authenticated()
             )
             .sessionManagement(manager -> manager.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
             .authenticationProvider(authenticationProvider())
