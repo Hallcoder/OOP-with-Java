@@ -14,9 +14,7 @@ import rw.ac.rca.OnlineShop.models.Mark;
 import rw.ac.rca.OnlineShop.models.Student;
 import rw.ac.rca.OnlineShop.repositories.ICourseRepository;
 import rw.ac.rca.OnlineShop.repositories.IStudentRepository;
-import rw.ac.rca.OnlineShop.services.ICourseService;
 import rw.ac.rca.OnlineShop.services.IMarkService;
-import rw.ac.rca.OnlineShop.services.IStudentService;
 
 import java.util.NoSuchElementException;
 
