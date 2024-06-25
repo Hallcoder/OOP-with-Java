@@ -22,7 +22,7 @@ import java.time.LocalDateTime;
 import java.util.NoSuchElementException;
 import java.util.UUID;
 
-@RestController
+
 @AllArgsConstructor
 @RequestMapping("/api/v1/product")
 public class ProductController {

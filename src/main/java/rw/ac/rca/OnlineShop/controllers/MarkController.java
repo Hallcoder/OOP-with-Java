@@ -18,7 +18,7 @@ import rw.ac.rca.OnlineShop.services.IMarkService;
 
 import java.util.NoSuchElementException;
 
-@RestController
+
 @AllArgsConstructor
 @RequestMapping("/api/v1/marks")
 public class MarkController {

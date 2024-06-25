@@ -35,15 +35,13 @@ public class UserPrincipal implements UserDetails {
     public static UserPrincipal create(User user) {
         List<GrantedAuthority> authorities = user.getRoles().stream()
                 .map(role -> new SimpleGrantedAuthority(role.name())).collect(Collectors.toList());
-        var userPrincipal =  new UserPrincipal(
+
+        return new UserPrincipal(
                 user.getId(),
                 user.getEmail(),
                 user.getPassword(),
                 authorities
         );
-
-        System.out.println(userPrincipal);
-        return userPrincipal;
     }
 
     @Override

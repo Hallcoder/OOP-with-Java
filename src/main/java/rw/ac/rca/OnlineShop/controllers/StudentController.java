@@ -14,7 +14,7 @@ import rw.ac.rca.OnlineShop.services.IStudentService;
 
 import java.util.*;
 
-@RestController
+
 @RequestMapping("/api/v1/student")
 @AllArgsConstructor
 public class StudentController {
